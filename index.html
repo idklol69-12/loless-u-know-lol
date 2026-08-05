@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Loless but IDK</title>
+  <style>
+    #board {
+      display: grid;
+      grid-template-columns: repeat(8, 60px);
+      width: 480px;
+    }
+
+    .cell {
+      width: 60px;
+      height: 60px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 24px;
+      border: 1px solid black;
+      cursor: pointer;
+    }
+
+    .white {
+      background-color: #eee;
+    }
+
+    .black {
+      background-color: #555;
+      color: white;
+    }
+  </style>
+</head>
+<body>
+
+<h2>Loless</h2>
+<div id="board"></div>
+
+<script>
+const board = document.getElementById("board");
+
+let selected = null;
+
+// YOUR PIECES (unchanged)
+const pieces = [
+  "1dk","Ra","Ka","Ba","Qa","Ka","Ba","Ka","Ra","1dk"
+  "Pa","Pa","Pa","Pa","Pa","Pa","Pa","Pa",
+  "La","La","La","La","La","La","La","La",
+  "","","","","","","","",
+  "","","","","","","","",
+  "L","L","L","L","L","L","L","L",
+  "P","P","P","P","P","P","P","P",
+  "IDK","R","K","B","Q","K","B","K","R","Idk"
+];
+
+function drawBoard() {
+  board.innerHTML = "";
+
+  for (let i = 0; i < 64; i++) {
+    const cell = document.createElement("div");
+    cell.classList.add("cell");
+
+    const row = Math.floor(i / 8);
+    const col = i % 8;
+
+    if ((row + col) % 2 === 0) {
+      cell.classList.add("white");
+    } else {
+      cell.classList.add("black");
+    }
+
+    cell.textContent = pieces[i];
+
+    cell.addEventListener("click", () => {
+
+      // SELECT
+      if (selected === null) {
+        if (pieces[i] !== "") {
+          selected = i;
+        }
+        return;
+      }
+
+      // CANCEL (same square)
+      if (i === selected) {
+        selected = null;
+        return;
+      }
+
+      // 👀 capture check BEFORE move
+      const captured = pieces[i];
+
+      // MOVE
+      pieces[i] = pieces[selected];
+      pieces[selected] = "";
+
+      
+      if (captured === "Ka" || captured === "K")
+      if (captured === "1DK" || captured === "1dk"){
+        if (pieces[i] === pieces[i].toUpperCase()) {
+          alert("WHITE WINS! BLACK LOSES! ok black and white");
+        } else {
+          alert("BLACK WINS! WHITE LOSES! ok black and white");
+        }
+        location.reload();
+        return;
+      }
+
+      selected = null;
+      drawBoard();
+    });
+
+    board.appendChild(cell);
+  }
+}
+
+drawBoard();
+</script>
+
+</body>
+</html>
