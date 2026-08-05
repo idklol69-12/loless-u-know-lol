@@ -1,33 +1,37 @@
 <!DOCTYPE html>
+
 <html>
 <head>
   <title>Loless but IDK</title>
   <style>
     #board {
       display: grid;
-      grid-template-columns: repeat(8, 60px);
-      width: 480px;
+      grid-template-columns: repeat(10, 60px);
+      width: 600px;
     }
 
-    .cell {
-      width: 60px;
-      height: 60px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 24px;
-      border: 1px solid black;
-      cursor: pointer;
-    }
+```
+.cell {
+  width: 60px;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
+  border: 1px solid black;
+  cursor: pointer;
+}
 
-    .white {
-      background-color: #eee;
-    }
+.white {
+  background-color: #eee;
+}
 
-    .black {
-      background-color: #555;
-      color: white;
-    }
+.black {
+  background-color: #555;
+  color: white;
+}
+```
+
   </style>
 </head>
 <body>
@@ -40,27 +44,27 @@ const board = document.getElementById("board");
 
 let selected = null;
 
-// YOUR PIECES (unchanged)
+// ✅ 80 PIECES (10x8)
 const pieces = [
-  "1dk","Ra","Ka","Ba","Qa","Ka","Ba","Ka","Ra","1dk"
-  "Pa","Pa","Pa","Pa","Pa","Pa","Pa","Pa",
-  "La","La","La","La","La","La","La","La",
-  "","","","","","","","",
-  "","","","","","","","",
-  "L","L","L","L","L","L","L","L",
-  "P","P","P","P","P","P","P","P",
-  "IDK","R","K","B","Q","K","B","K","R","Idk"
+ "1dk","Ra","Ka","Ba","Qa","1dk","Ba","Ka","Ra","1dk"
+  "Pa","Pa","Pa","Pa","Pa","Pa","Pa","Pa","Pa","Pa",
+  "La","La","La","La","La","La","La","La","La","La",
+  "","","","","","","","","","",
+  "","","","","","","","","","",
+  "L","L","L","L","L","L","L","L","L","L",
+  "P","P","P","P","P","P","P","P","P","P",
+  "Idk,"R","K","B","Q","IDK","B","K","R","Idk"
 ];
 
 function drawBoard() {
   board.innerHTML = "";
 
-  for (let i = 0; i < 64; i++) {
+  for (let i = 0; i < 80; i++) {
     const cell = document.createElement("div");
     cell.classList.add("cell");
 
-    const row = Math.floor(i / 8);
-    const col = i % 8;
+    const row = Math.floor(i / 10);
+    const col = i % 10;
 
     if ((row + col) % 2 === 0) {
       cell.classList.add("white");
@@ -72,7 +76,6 @@ function drawBoard() {
 
     cell.addEventListener("click", () => {
 
-      // SELECT
       if (selected === null) {
         if (pieces[i] !== "") {
           selected = i;
@@ -80,27 +83,52 @@ function drawBoard() {
         return;
       }
 
-      // CANCEL (same square)
       if (i === selected) {
         selected = null;
         return;
       }
 
-      // 👀 capture check BEFORE move
       const captured = pieces[i];
 
       // MOVE
       pieces[i] = pieces[selected];
       pieces[selected] = "";
 
-      
-      if (captured === "Ka" || captured === "K")
-      if (captured === "1DK" || captured === "1dk"){
-        if (pieces[i] === pieces[i].toUpperCase()) {
-          alert("WHITE WINS! BLACK LOSES! ok black and white");
+      // 🧠 KING SYSTEM
+
+      // white king dies → use backup
+      if (captured === "K") {
+        const backupIndex = pieces.indexOf("IDK");
+        if (backupIndex !== -1) {
+          pieces[backupIndex] = "K";
         } else {
-          alert("BLACK WINS! WHITE LOSES! ok black and white");
+          alert("BLACK WINS!");
+          location.reload();
+          return;
         }
+      }
+
+      // black king dies → use backup
+      if (captured === "Ka") {
+        const backupIndex = pieces.indexOf("1dk");
+        if (backupIndex !== -1) {
+          pieces[backupIndex] = "Ka";
+        } else {
+          alert("WHITE WINS!");
+          location.reload();
+          return;
+        }
+      }
+
+      // backup kings die = game over
+      if (captured === "IDK") {
+        alert("BLACK WINS!");
+        location.reload();
+        return;
+      }
+
+      if (captured === "1dk") {
+        alert("WHITE WINS!");
         location.reload();
         return;
       }
