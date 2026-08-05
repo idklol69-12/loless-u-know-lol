@@ -44,9 +44,9 @@ const board = document.getElementById("board");
 
 let selected = null;
 
-// ✅ 80 PIECES (10x8)
+
 const pieces = [
- "1dk","Ra","Ka","Ba","Qa","1dk","Ba","Ka","Ra","1dk"
+  "1dk","Ra","Ka","Ba","Qa","1dk","Ba","Ka","Ra","1dk",
   "Pa","Pa","Pa","Pa","Pa","Pa","Pa","Pa","Pa","Pa",
   "La","La","La","La","La","La","La","La","La","La",
   "","","","","","","","","","",
@@ -96,7 +96,6 @@ function drawBoard() {
 
       // 🧠 KING SYSTEM
 
-      // white king dies → use backup
       if (captured === "K") {
         const backupIndex = pieces.indexOf("IDK");
         if (backupIndex !== -1) {
@@ -108,7 +107,6 @@ function drawBoard() {
         }
       }
 
-      // black king dies → use backup
       if (captured === "Ka") {
         const backupIndex = pieces.indexOf("1dk");
         if (backupIndex !== -1) {
@@ -120,7 +118,6 @@ function drawBoard() {
         }
       }
 
-      // backup kings die = game over
       if (captured === "IDK") {
         alert("BLACK WINS!");
         location.reload();
