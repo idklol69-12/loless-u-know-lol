@@ -4,15 +4,17 @@
 <head>
   <title>Loless but IDK</title>
   <style>
-    #board {
-      display: grid;
-      grid-template-columns: repeat(10, 60px);
-      width: 600px;
-      gap: 2px; 
-      background: black;
+    body {
+      background: black; 
     }
 
 ```
+#board {
+  display: grid;
+  grid-template-columns: repeat(10, 60px);
+  gap: 4px; 
+}
+
 .cell {
   width: 60px;
   height: 60px;
@@ -25,6 +27,7 @@
 
 .white {
   background-color: #eee;
+  color: black;
 }
 
 .black {
@@ -37,7 +40,7 @@
 </head>
 <body>
 
-<h2>Loless</h2>
+<h2 style="color:white;">Loless but IDK</h2>
 <div id="board"></div>
 
 <script>
