@@ -44,7 +44,6 @@ const board = document.getElementById("board");
 
 let selected = null;
 
-
 const pieces = [
   "1dk","Ra","Ka","Ba","Qa","1dk","Ba","Ka","Ra","1dk",
   "Pa","Pa","Pa","Pa","Pa","Pa","Pa","Pa","Pa","Pa",
@@ -53,7 +52,7 @@ const pieces = [
   "","","","","","","","","","",
   "L","L","L","L","L","L","L","L","L","L",
   "P","P","P","P","P","P","P","P","P","P",
-  "Idk","R","K","B","Q","IDK","B","K","R","Idk"
+  "IDK","R","K","B","Q","IDK","B","K","R","IDK"
 ];
 
 function drawBoard() {
@@ -90,11 +89,8 @@ function drawBoard() {
 
       const captured = pieces[i];
 
-      // MOVE
       pieces[i] = pieces[selected];
       pieces[selected] = "";
-
-      // 🧠 KING SYSTEM
 
       if (captured === "K") {
         const backupIndex = pieces.indexOf("IDK");
