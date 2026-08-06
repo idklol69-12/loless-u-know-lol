@@ -104,14 +104,14 @@ function drawBoard() {
         if (backupIndex !== -1) {
           pieces[backupIndex] = "Ka";
         } else {
-          alert("WHITE WINS!");
+          alert("WHITE WINS! White won the game bro !! Black lost");
           location.reload();
           return;
         }
       }
 
       if (captured === "IDK") {
-        alert("BLACK WINS!");
+        alert("BLACK WINS! Black won the game bro !! White lost");
         location.reload();
         return;
       }
